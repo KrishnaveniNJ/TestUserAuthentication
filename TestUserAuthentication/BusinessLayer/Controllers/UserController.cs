@@ -77,9 +77,9 @@ namespace TestUserAuthentication.Controllers
                 else
                 {
                     
-                    List<User> UserList = new List<User>();
+                 //   List<User> UserList = new List<User>();
                 
-                    return UserList;
+                    return null;
                 }
 
             }
@@ -88,9 +88,9 @@ namespace TestUserAuthentication.Controllers
                 username = "";
                 new ErrorLog().WriteToLog(ex.Message);
 
-                List<User> UserList = new List<User>();
+             //   List<User> UserList = new List<User>();
 
-                return UserList;
+                return null;
             }
         }
 
@@ -125,32 +125,32 @@ namespace TestUserAuthentication.Controllers
         }
 
 
-        [Route("GetAllUserSessions")]
-        [HttpGet]
-        public async Task<List<UserSession>> GetAllUserSessions()
-        {
+        //[Route("GetAllUserSessions")]
+        //[HttpGet]
+        //public async Task<List<UserSession>> GetAllUserSessions()
+        //{
 
 
 
-            try
-            {
+        //    try
+        //    {
 
 
-                var conditions = new List<ScanCondition>();
+        //        var conditions = new List<ScanCondition>();
 
-                return await _DynamoDBContext.ScanAsync<UserSession>(conditions).GetRemainingAsync();
+        //        return await _DynamoDBContext.ScanAsync<UserSession>(conditions).GetRemainingAsync();
 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                new ErrorLog().WriteToLog(ex.Message);
+        //        new ErrorLog().WriteToLog(ex.Message);
 
-                List<UserSession> UserList = new List<UserSession>();
+        //        List<UserSession> UserList = new List<UserSession>();
 
-                return UserList;
-            }
-        }
+        //        return UserList;
+        //    }
+        //}
 
        
 

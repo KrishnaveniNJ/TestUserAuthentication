@@ -46,7 +46,7 @@ namespace UserAuthentication
             //asserting
 
             Assert.NotNull(result);
-
+            //Assert.NotEqual("200", instance.Response.StatusCode.ToString());
 
         }
     }
