@@ -5,53 +5,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2.DataModel;
+using TestUserAuthentication.DataLayer;
 
 namespace TestUserAuthentication.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-    
+        private readonly IDynamoDBService DynamoService;
 
-        private readonly IDynamoDBContext _DynamoDBContext;
-       
-        public UserController( IDynamoDBContext dynamoDBContext)
+        public UserController(IDynamoDBService _Dynamoservice)
         {
-         
-            _DynamoDBContext = dynamoDBContext;
+            try
+            {
+                DynamoService = _Dynamoservice;
+            }
+            catch (Exception ex)
+            {
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured in UserController :  " + ex.Message);
+            }
         }
+
+
         [Route("GetLogin")]
         [HttpGet]
         public async Task<string> GetLogin(string Username,string password)
         {
-            string returnstring = "Invalid Username and Password";
-
             try
             {
-
-
-                var UserObj = _DynamoDBContext.LoadAsync<User>(Username, password).Result;
-                if (UserObj != null)
-                {
-                    if (UserObj.Username != "" || UserObj.Username != null)
-                    {
-                        Guid g = Guid.NewGuid();
-                        var usersessionObj = _DynamoDBContext.LoadAsync<UserSession>(Username).Result;
-                        usersessionObj.Username = Username;
-                        usersessionObj.SessionToken = g.ToString();
-                        returnstring = g.ToString();
-                        await _DynamoDBContext.SaveAsync(usersessionObj);
-                    }
-                }
-                return returnstring;
-            }
+                return (await DynamoService.GetLogin(Username, password));
+             }
             catch (Exception ex)
             {
-                new ErrorLog().WriteToLog(returnstring);
-               
-                return returnstring;
-
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured in Getlogin UserController :  " + ex.Message);
+                return null;
             }
         }
 
@@ -59,37 +47,13 @@ namespace TestUserAuthentication.Controllers
         [HttpGet]
         public async Task<List<User>> GetUserRecords(string SessionToken,string username)
         {
-
-
-
             try
             {
-                var UserObj = _DynamoDBContext.LoadAsync<UserSession>(username, SessionToken).Result;
-
-                if (UserObj != null)
-                {
-                    return await _DynamoDBContext
-
-                    .QueryAsync<User>(username)
-                    .GetRemainingAsync();
-                }
-
-                else
-                {
-                    
-                 //   List<User> UserList = new List<User>();
-                
-                    return null;
-                }
-
+                return (await DynamoService.GetUserRecords(SessionToken, username));
             }
             catch (Exception ex)
             {
-                username = "";
-                new ErrorLog().WriteToLog(ex.Message);
-
-             //   List<User> UserList = new List<User>();
-
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured in GetUserRecords UserController :  " + ex.Message);
                 return null;
             }
         }
@@ -99,60 +63,16 @@ namespace TestUserAuthentication.Controllers
         [HttpGet]
         public async Task<List<User>> GetAllUsers()
         {
-
-
-
             try
             {
-                var user = new User();
-             string password=   user.EnryptString("12345");
-              //  string decrypt = DecryptString("12345");
-
-                var conditions = new List<ScanCondition>();
-
-                return await _DynamoDBContext.ScanAsync<User>(conditions).GetRemainingAsync();
-
+                return (await DynamoService.GetAllUsers());
             }
             catch (Exception ex)
             {
-                
-                new ErrorLog().WriteToLog(ex.Message);
-
-                List<User> UserList = new List<User>();
-
-                return UserList;
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured GetAllUsers in UserController :  " + ex.Message);
+                return null;
             }
-        }
-
-
-        //[Route("GetAllUserSessions")]
-        //[HttpGet]
-        //public async Task<List<UserSession>> GetAllUserSessions()
-        //{
-
-
-
-        //    try
-        //    {
-
-
-        //        var conditions = new List<ScanCondition>();
-
-        //        return await _DynamoDBContext.ScanAsync<UserSession>(conditions).GetRemainingAsync();
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        new ErrorLog().WriteToLog(ex.Message);
-
-        //        List<UserSession> UserList = new List<UserSession>();
-
-        //        return UserList;
-        //    }
-        //}
-
-       
+        }      
 
     }
 }

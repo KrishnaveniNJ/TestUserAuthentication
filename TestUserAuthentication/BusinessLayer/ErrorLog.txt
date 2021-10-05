@@ -1,0 +1,39 @@
+﻿ Invalid Username and Password
+ Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+ Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+ Invalid Username and Password
+ Invalid Username and Password
+ Unable to convert hash key value for property Username
+ Invalid Username and PasswordError occured in GetLogin Method:05-10-2021 12:48:39
+ Unable to convert hash key value for property UsernameError occured in GetLogin Method:05-10-2021 12:48:41
+ Error occured in GetLogin Method:  Invalid Username and Password!!05-10-2021 12:51:05
+ Error occured in GetLogin Method:  Unable to convert hash key value for property Username05-10-2021 12:51:07
+ Error occured in GetLogin Method:  Invalid Username and Password!! 05-10-2021 13:45:00
+ Error occured in GetLogin Method:  Unable to convert hash key value for property Username 05-10-2021 13:45:04
+ Unable to convert hash key value for property Username
+ 05-10-2021 15:42:27  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 15:42:27  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:42:35  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:43:15  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 15:43:15  Error occured in GetLogin request Method in Data Layer :  Must have one hash key defined for the table User
+ 05-10-2021 15:43:20  Error occured in GetUserRecords request Method in Data Layer :  Must have one hash key defined for the table UserSession
+ 05-10-2021 15:43:29  Error occured in GetAllUsers request Method in Data Layer :  Request is missing Authentication Token
+ 05-10-2021 15:44:25  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 15:44:25  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:44:37  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:46:39  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 15:46:39  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:47:15  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 15:47:15  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:48:23  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:48:31  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 15:48:41  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 16:11:23  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 16:11:23  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 16:11:37  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 16:24:51  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 16:24:51  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 16:24:56  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 16:41:57  Error occured in GetLogin request Method in Data Layer :  Invalid Username and Password!!
+ 05-10-2021 16:41:57  Error occured in GetLogin request Method in Data Layer :  Unable to convert hash key value for property Username
+ 05-10-2021 16:42:03  Error occured in GetUserRecords request Method in Data Layer :  Unable to convert hash key value for property Username

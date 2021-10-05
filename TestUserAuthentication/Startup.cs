@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
 using FluentAssertions.Common;
+using TestUserAuthentication.DataLayer;
 
 namespace TestUserAuthentication
 {
@@ -22,7 +23,14 @@ namespace TestUserAuthentication
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            try
+            {
+                Configuration = configuration;
+            }
+            catch (Exception ex)
+            {
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured in startupclass :  " + ex.Message);
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -30,51 +38,67 @@ namespace TestUserAuthentication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            try
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestUserAuthentication", Version = "v1" });
-            });
+       
+                services.AddControllers();
 
-            string accessKey;
-            string secretKey;
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestUserAuthentication", Version = "v1" });
+                });
 
-            
+                string accessKey=string.Empty;
+                string secretKey= string.Empty;
 
-            accessKey = Configuration.GetValue<string>("AWS:AccessKey");
-            secretKey = Configuration.GetValue<string>("AWS:SecretKey");
-            var credentials = new BasicAWSCredentials(accessKey, secretKey);
+                accessKey = Configuration.GetValue<string>("AWS:AccessKey");
+                secretKey = Configuration.GetValue<string>("AWS:SecretKey");
+                var credentials = new BasicAWSCredentials(accessKey, secretKey);
 
-            var config = new AmazonDynamoDBConfig()
+                var config = new AmazonDynamoDBConfig()
+                {
+                    RegionEndpoint = Amazon.RegionEndpoint.APSouth1
+                };
+
+                var client = new AmazonDynamoDBClient(credentials, config);
+                services.AddSingleton<IAmazonDynamoDB>(client);
+                services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
+                services.AddSingleton<IDynamoDBService, DynamoDBService>();
+            }
+            catch (Exception ex)
             {
-                RegionEndpoint = Amazon.RegionEndpoint.APSouth1
-            };
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured in ConfigureServices in startupclass :  " + ex.Message);              
 
-            var client = new AmazonDynamoDBClient(credentials, config);
-            services.AddSingleton<IAmazonDynamoDB>(client);
-            services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
+            }
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            try
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestUserAuthentication v1"));
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                    app.UseSwagger();
+                    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestUserAuthentication v1"));
+                }
+
+                app.UseRouting();
+
+                app.UseAuthorization();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
+
             }
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            catch (Exception ex)
             {
-                endpoints.MapControllers();
-            });
-        }
+                new ErrorLog().WriteToLog(DateTime.Now.ToString() + "  " + "Error occured in Configure in startupclass :  " + ex.Message);
+            }
+}
     }
 }

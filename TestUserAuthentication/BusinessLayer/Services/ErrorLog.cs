@@ -13,15 +13,13 @@ namespace TestUserAuthentication
         {
 
             //---------------------------------------
-            var path = Path.Combine("Content", "ErrorLog.txt");
+            var path = Path.Combine("BusinessLayer", "ErrorLog.txt");
             using (var mutex = new Mutex(false, "LARGEFILE"))
             {
                 mutex.WaitOne();
                 File.AppendAllText(path, " " + message + Environment.NewLine);
                 mutex.ReleaseMutex();
-            }
-          
-
+            }        
 
 
         }
